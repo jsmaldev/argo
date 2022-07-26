@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package example.web;
+package security.web;
 
 import java.time.Instant;
 import java.util.stream.Collectors;

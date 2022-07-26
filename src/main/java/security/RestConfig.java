@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package example;
+package security;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;

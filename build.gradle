@@ -5,6 +5,7 @@ plugins {
 }
 
 repositories {
+	mavenLocal()
 	mavenCentral()
 	maven { url "https://repo.spring.io/milestone" }
 	maven { url "https://repo.spring.io/snapshot" }
@@ -20,9 +21,22 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-oauth2-jose:5.7.2'
 	implementation 'org.springframework.security:spring-security-crypto:5.7.2'
 	implementation 'org.springframework.security:spring-security-web:5.7.2'
+	implementation  'org.projectlombok:lombok:1.18.24'
+
+	implementation  'org.springframework:spring-jdbc:5.3.21'
+	implementation  'mysql:mysql-connector-java:8.0.29'
+
+
+	implementation  'de.jsmal:structure:0.3.4'
+	implementation  'de.jsmal:cruddao:0.1.9'
+
+	implementation  'com.opencsv:opencsv:5.3'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.2'
 	testImplementation 'org.springframework.security:spring-security-test:5.7.2'
+
+	compileOnly 'org.projectlombok:lombok:1.18.24'
+	annotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
 
 tasks.withType(Test).configureEach {

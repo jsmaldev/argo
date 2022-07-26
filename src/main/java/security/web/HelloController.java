@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package example.web;
+package security.web;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;

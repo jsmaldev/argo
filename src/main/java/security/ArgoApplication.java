@@ -14,21 +14,17 @@
  * limitations under the License.
  */
 
-package example;
+package security;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * The application entry point.
- *
- * @author Josh Cummings
- */
+
 @SpringBootApplication
-public class JwtLoginApplication {
+public class ArgoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(JwtLoginApplication.class, args);
+		SpringApplication.run(ArgoApplication.class, args);
 	}
 
 }

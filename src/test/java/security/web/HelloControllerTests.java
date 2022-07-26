@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package example.web;
+package security.web;
 
-import example.RestConfig;
+import security.RestConfig;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;

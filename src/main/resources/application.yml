@@ -5,6 +5,33 @@ logging:
     org.springframework.security: INFO
 #    org.springframework.boot.autoconfigure: DEBUG
 
+
+#Just for INFO
+structure:
+  version: 0.3.4
+
+de:
+  jsmal:
+    cruddao:
+      version: 0.1.9
+
+servlet:
+  app:
+    version: 0.1.4
+
 jwt:
   private.key: classpath:app.key
   public.key: classpath:app.pub
+
+spring:
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_proto?useUnicode=true&allowPublicKeyRetrieval=true&serverTimezone=UTC&useSSL=false&useLegacyDatetimeCode=false
+    username: admuser
+    password: ThePassword
+
+
+
