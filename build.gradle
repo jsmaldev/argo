@@ -1,0 +1,31 @@
+plugins {
+	id 'org.springframework.boot' version '2.7.1'
+	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+	id 'java'
+}
+
+repositories {
+	mavenCentral()
+	maven { url "https://repo.spring.io/milestone" }
+	maven { url "https://repo.spring.io/snapshot" }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server:2.7.2'
+	implementation 'org.springframework.boot:spring-boot-starter-web:2.7.2'
+	implementation 'org.springframework.security:spring-security-config:5.7.2'
+	implementation 'org.springframework.security:spring-security-core:5.7.2'
+	implementation 'org.springframework.security:spring-security-oauth2-resource-server:5.7.2'
+	implementation 'org.springframework.security:spring-security-oauth2-core:5.7.2'
+	implementation 'org.springframework.security:spring-security-oauth2-jose:5.7.2'
+	implementation 'org.springframework.security:spring-security-crypto:5.7.2'
+	implementation 'org.springframework.security:spring-security-web:5.7.2'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.2'
+	testImplementation 'org.springframework.security:spring-security-test:5.7.2'
+}
+
+tasks.withType(Test).configureEach {
+	useJUnitPlatform()
+	outputs.upToDateWhen { false }
+}
