@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package security.web;
+package de.jsmal.web;
 
-import security.RestConfig;
+import de.jsmal.RestConfig;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;

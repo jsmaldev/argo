@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package security;
+package de.jsmal;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

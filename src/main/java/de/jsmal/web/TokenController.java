@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-package security.web;
+package de.jsmal.web;
 
 import java.time.Instant;
 import java.util.stream.Collectors;
 
+import de.jsmal.core.ServletEngine;
+import de.jsmal.core.searchObject.SearchQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,6 +28,7 @@ import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -38,6 +41,9 @@ public class TokenController {
 
 	@Autowired
 	JwtEncoder encoder;
+
+	@Autowired
+	ServletEngine servletEngine;
 
 	@PostMapping("/token")
 	public String token(Authentication authentication) {
@@ -56,6 +62,13 @@ public class TokenController {
 				.build();
 		// @formatter:on
 		return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+	}
+
+	@PostMapping(
+			value = "/search", consumes = "application/json", produces = "application/json")
+	public String search(@RequestBody SearchQuery query) {
+		//return query.toString();
+		return this.servletEngine.search(query);
 	}
 
 }

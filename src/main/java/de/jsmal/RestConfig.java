@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package security;
+package de.jsmal;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
