@@ -16,7 +16,7 @@
 
 package de.jsmal.web;
 
-import de.jsmal.RestConfig;
+import de.jsmal.SpringBeansConfig;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Josh Cummings
  */
 @WebMvcTest({ HelloController.class, TokenController.class })
-@Import(RestConfig.class)
+@Import(SpringBeansConfig.class)
 public class HelloControllerTests {
 
 	@Autowired
