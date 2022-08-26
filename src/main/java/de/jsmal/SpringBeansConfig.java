@@ -19,6 +19,8 @@ import de.jsmal.core.engine.model.source.dictionary.DictionarySource;
 import de.jsmal.core.engine.model.source.dictionary.InstanceDictionary;
 import de.jsmal.core.engine.model.source.dictionary.MySqlDictionarySource;
 import de.jsmal.core.engine.model.utils.Dictionary;
+import de.jsmal.security.LocalUserDetailsService;
+import de.jsmal.security.SecurityUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -73,16 +75,22 @@ public class SpringBeansConfig {
 	}
 
 	// -------- worked example -----------
+//	@Bean
+//	UserDetailsService users() {
+//		return new InMemoryUserDetailsManager(
+//			User.withUsername("user")
+//				.password("{noop}password")
+//				.authorities("app")
+//				.build()
+//		);
+//	}
+	// -------- worked example END -----------
+
 	@Bean
 	UserDetailsService users() {
-		return new InMemoryUserDetailsManager(
-			User.withUsername("user")
-				.password("{noop}password")
-				.authorities("app")
-				.build()
-		);
+		return new LocalUserDetailsService();
 	}
-	// -------- worked example END -----------
+
 
 	@Bean
 	JwtDecoder jwtDecoder() {
