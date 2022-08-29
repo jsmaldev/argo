@@ -45,20 +45,20 @@ public class ServletEngine {
 
     }
 
-    public String search(SearchQuery query){
-
-        if (query==null) return new ResultSearchList("ERROR: Syntax of query has errors. NULL query").toJSON();
+    // internal function to get Objects in servlet
+    public ResultSearchList searchList(SearchQuery query) {
+        if (query==null) return new ResultSearchList("ERROR: Syntax of query has errors. NULL query");
         String tableName = query.getTable();
-        if (tableName==null || tableName.isEmpty()) return new ResultSearchList("ERROR: Syntax of query has errors. No table name").toJSON();
+        if (tableName==null || tableName.isEmpty()) return new ResultSearchList("ERROR: Syntax of query has errors. No table name");
         CObject search_CObject = instanceDictionary.getNewCObjectByName(tableName);
 
-        if(search_CObject==null) return new ResultSearchList("ERROR: Syntax of query has errors. No table in dictionary").toJSON();
+        if(search_CObject==null) return new ResultSearchList("ERROR: Syntax of query has errors. No table in dictionary");
         if(      query.getFields()==null||
                 query.getValues()==null||
                 query.getColumns()==null||
                 query.getFields().size()!=query.getValues().size()
-        ) return new ResultSearchList("ERROR: Syntax of query has errors. Incorrect parameters").toJSON();
-        if(!query.isReturnAllColumns()&&query.getColumns().size()==0) return new ResultSearchList("ERROR: Syntax of query has errors. No columns").toJSON();
+        ) return new ResultSearchList("ERROR: Syntax of query has errors. Incorrect parameters");
+        if(!query.isReturnAllColumns()&&query.getColumns().size()==0) return new ResultSearchList("ERROR: Syntax of query has errors. No columns");
 
 
 //--------CONDITIONS--------------------------------
@@ -77,7 +77,7 @@ public class ServletEngine {
             String current_field_name = query.getFields().get(i);
             String current_field_value = query.getValues().get(i);
             if (!current_field_name.isEmpty()&&!search_CObject.updateAttributeStringValueByName (current_field_name, current_field_value)){
-                return new ResultSearchList("ERROR: Syntax of search field parameter has error by prepare query object").toJSON();
+                return new ResultSearchList("ERROR: Syntax of search field parameter has error by prepare query object");
             }
         }
         log.debug("search_object: "+search_CObject);
@@ -117,8 +117,12 @@ public class ServletEngine {
 
         log.debug("searchResultRecords = "+searchResultRecords); //add here columns_parameter - to build view - can be null
         //log.debug("JSON: " + searchResultRecords.toJSON());
-        return searchResultRecords.toJSON();
-        //add language translation
+        return searchResultRecords;
+    }
 
+    // function to response in JSON as a servlet
+    public String search(SearchQuery query){
+        ResultSearchList result = this.searchList(query);
+        return result.toJSON();
     }
 }
