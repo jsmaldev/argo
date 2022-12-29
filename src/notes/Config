@@ -1,0 +1,7 @@
+
+1. Install Lib in Maven
+mvn install:install-file -Dfile=C:\WORKS\Development\ExtraFiles\structure-0.3.4.jar -DgroupId=de.jsmal -DartifactId=structure -Dversion=0.3.4 -Dpackaging=jar -DgeneratePom=true
+mvn install:install-file -Dfile=C:\WORKS\Development\ExtraFiles\cruddao-0.1.9.jar -DgroupId=de.jsmal -DartifactId=cruddao -Dversion=0.1.9 -Dpackaging=jar -DgeneratePom=true
+
+2. Start embeded Tomcat on different port
+This is my favorite way to change the port of embedded tomcat in the Spring boot application, just start your JVM with -Dserver.port=8080 or --server.port=8080 and it will listen to that port.

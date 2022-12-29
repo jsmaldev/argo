@@ -39,8 +39,8 @@ public class SecurityUser implements UserDetails {
 //        log.info("RET_CODE = " + userFromDB_ResultSearchList.getRetCode());
 //        log.info("count_values = " + userFromDB_ResultSearchList.getCount_values());
 //        log.info("requested_columns = " + userFromDB_ResultSearchList.getRequestedColumns());
-//        log.info("username = " + userFromDB_ResultSearchList.getObjects().get(0).getAttributeValueByName("username"));
-//        log.info("password = " + userFromDB_ResultSearchList.getObjects().get(0).getAttributeValueByName("password"));
+        log.info("username = " + userFromDB_ResultSearchList.getObjects().get(0).getAttributeValueByName("username"));
+        log.info("password = " + userFromDB_ResultSearchList.getObjects().get(0).getAttributeValueByName("password"));
 //        log.info("is_active = " + userFromDB_ResultSearchList.getObjects().get(0).getAttributeValueByName("is_active"));
 
 
@@ -63,7 +63,8 @@ public class SecurityUser implements UserDetails {
     @Override
     public String getPassword() {
 //        log.info("getPassword: " + this.password);
-        return "{noop}"+this.password;
+//        return "{noop}"+this.password;
+        return "{bcrypt}"+this.password;
     }
 
     @Override

@@ -33,4 +33,8 @@ public class HelloController {
 		return "Hello, " + authentication.getName() + "!";
 	}
 
+	@GetMapping("/test")
+public String test(){
+		return "Test is working";
+	}
 }

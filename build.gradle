@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.7.1'
 	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
 	id 'java'
+	id 'war'
 }
 
 repositories {
@@ -35,6 +36,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.2'
 	testImplementation 'org.springframework.security:spring-security-test:5.7.2'
 
+	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+
 	compileOnly 'org.projectlombok:lombok:1.18.24'
 	annotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
@@ -42,4 +45,28 @@ dependencies {
 tasks.withType(Test).configureEach {
 	useJUnitPlatform()
 	outputs.upToDateWhen { false }
+}
+
+//bootWar {
+//	mainClass = 'de.jsmal.ArgoApplication'
+//	archiveName('argo.war')
+//}
+
+tasks.named("bootJar") {
+	archiveName('argo.jar')
+	manifest {
+		attributes 'Start-Class': 'de.jsmal.ArgoApplication'
+	}
+}
+
+tasks.named("bootWar") {
+	archiveName('argo.war')
+	manifest {
+		attributes 'Start-Class': 'org.springframework.boot.loader.WarLauncher'
+		attributes 'Main-Class': 'de.jsmal.ArgoApplication'
+	}
+}
+
+springBoot {
+	mainClass = 'de.jsmal.ArgoApplication'
 }
