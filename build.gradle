@@ -47,10 +47,7 @@ tasks.withType(Test).configureEach {
 	outputs.upToDateWhen { false }
 }
 
-//bootWar {
-//	mainClass = 'de.jsmal.ArgoApplication'
-//	archiveName('argo.war')
-//}
+
 
 tasks.named("bootJar") {
 	archiveName('argo.jar')
