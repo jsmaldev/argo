@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import de.jsmal.core.ServletEngine;
 import de.jsmal.core.searchObject.SearchQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -30,6 +31,8 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import static java.lang.Long.parseLong;
 
 /**
  * A controller for the token resource.
@@ -45,10 +48,15 @@ public class TokenController {
 	@Autowired
 	ServletEngine servletEngine;
 
+	@Value("${security.expiry}")
+	String expiryValue;
+
 	@PostMapping("/token")
 	public String token(Authentication authentication) {
 		Instant now = Instant.now();
-		long expiry = 36000L; //36000L - minutes for valid cert
+
+		long expiry = parseLong(this.expiryValue); //36000L - minutes for valid cert
+
 		// @formatter:off
 		String scope = authentication.getAuthorities().stream()
 				.map(GrantedAuthority::getAuthority)

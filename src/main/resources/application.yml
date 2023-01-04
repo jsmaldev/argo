@@ -5,6 +5,8 @@ logging:
     org.springframework.security: INFO
 #    org.springframework.boot.autoconfigure: DEBUG
 
+security:
+  expiry: 36000 # minutes for valid certificate
 
 #Just for INFO
 structure:
