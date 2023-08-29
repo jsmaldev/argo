@@ -28,10 +28,12 @@ dependencies {
 	implementation  'mysql:mysql-connector-java:8.0.29'
 
 
-	implementation  'de.jsmal:structure:0.3.4'
+	implementation  'de.jsmal:structure:0.3.8'
 	implementation  'de.jsmal:cruddao:0.1.9'
 
 	implementation  'com.opencsv:opencsv:5.3'
+	implementation 'junit:junit:4.13.1'
+	implementation 'junit:junit:4.13.1'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.2'
 	testImplementation 'org.springframework.security:spring-security-test:5.7.2'

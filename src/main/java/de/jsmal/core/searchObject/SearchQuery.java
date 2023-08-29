@@ -8,6 +8,7 @@ import java.util.HashMap;
 @Data
 public class SearchQuery {
     private String table;
+    private String language;
     private ArrayList<String> columns;
     private ArrayList<String> fields;
     private ArrayList<String> values;

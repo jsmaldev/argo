@@ -3,6 +3,7 @@ logging:
     root: INFO
     org.springframework.web: INFO
     org.springframework.security: INFO
+    de.jsmal.core.engine.search: DEBUG
 #    org.springframework.boot.autoconfigure: DEBUG
 
 security:
@@ -10,7 +11,7 @@ security:
 
 #Just for INFO
 structure:
-  version: 0.3.4
+  version: 0.3.8
 
 de:
   jsmal:

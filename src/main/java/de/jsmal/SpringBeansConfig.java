@@ -17,6 +17,7 @@ import de.jsmal.core.engine.model.source.data.DataSource;
 import de.jsmal.core.engine.model.source.data.MySqlDataSource;
 import de.jsmal.core.engine.model.source.dictionary.DictionarySource;
 import de.jsmal.core.engine.model.source.dictionary.InstanceDictionary;
+import de.jsmal.core.engine.model.source.dictionary.LanguageDictionary;
 import de.jsmal.core.engine.model.source.dictionary.MySqlDictionarySource;
 import de.jsmal.core.engine.model.utils.Dictionary;
 import de.jsmal.security.LocalUserDetailsService;
@@ -153,6 +154,11 @@ public class SpringBeansConfig {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	@Bean
+	LanguageDictionary languageDictionary (){
+		return new LanguageDictionary();
 	}
 
 }

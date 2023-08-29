@@ -1,5 +1,6 @@
 package de.jsmal.core;
 
+import de.jsmal.core.engine.model.source.dictionary.LanguageDictionary;
 import de.jsmal.core.searchObject.SearchQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +11,11 @@ import de.jsmal.core.engine.model.source.data.DataSource;
 import de.jsmal.core.engine.model.source.dictionary.InstanceDictionary;
 import de.jsmal.core.engine.search.ResultSearchList;
 import de.jsmal.core.engine.search.SearchEngine;
+
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 
 @Slf4j
@@ -21,8 +26,17 @@ public class ServletEngine {
     InstanceDictionary instanceDictionary;
     @Autowired
     DataSource dataSource;
-    HashMap<String, HashMap<String, HashMap<String,String>>> languageMap;
 
+    @Autowired
+    LanguageDictionary languageDictionary;
+
+    // --- test constructor ---
+//    public ServletEngine(InstanceDictionary instanceDictionary, DataSource dataSource, LanguageDictionary languageDictionary){
+//        this("1","1","1");
+//        this.instanceDictionary = instanceDictionary;
+//        this.dataSource = dataSource;
+//        this.languageDictionary = languageDictionary;
+//    }
     // --- constructor ---
     public ServletEngine(
             @Value("${structure.version}") String structure_version,
@@ -33,11 +47,11 @@ public class ServletEngine {
         log.info("===== de.jsmal.cruddao.version: " + cruddao_version);
         log.info("===== de.jsmal.servlet.app.version: " + app_version);
 
-        this.languageMap = new HashMap<>();
+//        this.languageMap = new HashMap<>();
         // -- languageMap -> tableNameFieldTranslationMap -> filedNameTranslationMap
 
         //load all records from systranslation
-        // languageMap = InitTranslation.getLanguagesMap(languageMap, this.instanceDictionary, this.dataSource);
+//         languageMap = InitTranslation.getLanguagesMap(languageMap, this.instanceDictionary, this.dataSource);
 
 //        log.info("===== Translation parameters: languages: "+languageMap.size());
 //        log.info("===== Translation parameters: tables en: "+languageMap.get("en").size());
@@ -47,18 +61,20 @@ public class ServletEngine {
 
     // internal function to get Objects in servlet
     public ResultSearchList searchList(SearchQuery query) {
-        if (query==null) return new ResultSearchList("ERROR: Syntax of query has errors. NULL query");
+        if (query==null) return new ResultSearchList("ERROR: Syntax of query has errors. NULL query", "en");
         String tableName = query.getTable();
-        if (tableName==null || tableName.isEmpty()) return new ResultSearchList("ERROR: Syntax of query has errors. No table name");
+        log.info("tableName: " + tableName);
+        if (tableName==null || tableName.isEmpty()) return new ResultSearchList("ERROR: Syntax of query has errors. No table name", "en");
+        log.info("instanceDictionary: " + instanceDictionary);
         CObject search_CObject = instanceDictionary.getNewCObjectByName(tableName);
 
-        if(search_CObject==null) return new ResultSearchList("ERROR: Syntax of query has errors. No table in dictionary");
+        if(search_CObject==null) return new ResultSearchList("ERROR: Syntax of query has errors. No table in dictionary", "en");
         if(      query.getFields()==null||
                 query.getValues()==null||
                 query.getColumns()==null||
                 query.getFields().size()!=query.getValues().size()
-        ) return new ResultSearchList("ERROR: Syntax of query has errors. Incorrect parameters");
-        if(!query.isReturnAllColumns()&&query.getColumns().size()==0) return new ResultSearchList("ERROR: Syntax of query has errors. No columns");
+        ) return new ResultSearchList("ERROR: Syntax of query has errors. Incorrect parameters", "en");
+        if(!query.isReturnAllColumns()&&query.getColumns().size()==0) return new ResultSearchList("ERROR: Syntax of query has errors. No columns","en");
 
 
 //--------CONDITIONS--------------------------------
@@ -77,7 +93,7 @@ public class ServletEngine {
             String current_field_name = query.getFields().get(i);
             String current_field_value = query.getValues().get(i);
             if (!current_field_name.isEmpty()&&!search_CObject.updateAttributeStringValueByName (current_field_name, current_field_value)){
-                return new ResultSearchList("ERROR: Syntax of search field parameter has error by prepare query object");
+                return new ResultSearchList("ERROR: Syntax of search field parameter has error by prepare query object","en");
             }
         }
         log.debug("search_object: "+search_CObject);
@@ -108,21 +124,25 @@ public class ServletEngine {
             if (!columns_parameter.contains(fields_value)) columns_parameter.add(fields_value);
         }
 
+        log.debug("language = " + query.getLanguage());
         log.debug("columns_parameter = " + columns_parameter);
         log.debug("isReturnAllColumns = " + query.isReturnAllColumns());
         log.debug("condition = " + condition);
         log.debug("limitOrder = " + limitOrder);
 
-        ResultSearchList searchResultRecords = SearchEngine.searchRecordsByParameters(search_CObject, columns_parameter, query.isReturnAllColumns(),condition, limitOrder, dataSource, instanceDictionary);
+        ResultSearchList searchResultRecords = SearchEngine.searchRecordsByParameters(search_CObject, columns_parameter, query.isReturnAllColumns(),query.getLanguage(),condition, limitOrder, dataSource, instanceDictionary);
 
         log.debug("searchResultRecords = "+searchResultRecords); //add here columns_parameter - to build view - can be null
         //log.debug("JSON: " + searchResultRecords.toJSON());
+        //here add from dictionary languages
         return searchResultRecords;
     }
 
     // function to response in JSON as a servlet
     public String search(SearchQuery query){
         ResultSearchList result = this.searchList(query);
-        return result.toJSON();
+            log.info("return result: " + Base64.getEncoder().encodeToString(result.toJSON(languageDictionary, dataSource, instanceDictionary).getBytes(StandardCharsets.UTF_8)));
+            return Base64.getEncoder().encodeToString(result.toJSON(languageDictionary, dataSource, instanceDictionary).getBytes(StandardCharsets.UTF_8));
+//        return result.toJSON();
     }
 }
