@@ -142,7 +142,8 @@ public class ServletEngine {
     public String search(SearchQuery query){
         ResultSearchList result = this.searchList(query);
             log.info("return result: " + Base64.getEncoder().encodeToString(result.toJSON(languageDictionary, dataSource, instanceDictionary).getBytes(StandardCharsets.UTF_8)));
-            return Base64.getEncoder().encodeToString(result.toJSON(languageDictionary, dataSource, instanceDictionary).getBytes(StandardCharsets.UTF_8));
+//            return Base64.getEncoder().encodeToString(result.toJSON(languageDictionary, dataSource, instanceDictionary).getBytes(StandardCharsets.UTF_8));
 //        return result.toJSON();
+        return result.toJSON(languageDictionary, dataSource, instanceDictionary);
     }
 }
