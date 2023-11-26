@@ -16,23 +16,23 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server:2.7.2'
 	implementation 'org.springframework.boot:spring-boot-starter-web:2.7.2'
 	implementation 'org.springframework.security:spring-security-config:5.7.2'
-	implementation 'org.springframework.security:spring-security-core:5.7.2'
+	implementation 'org.springframework.security:spring-security-core:5.7.7'
 	implementation 'org.springframework.security:spring-security-oauth2-resource-server:5.7.2'
 	implementation 'org.springframework.security:spring-security-oauth2-core:5.7.2'
 	implementation 'org.springframework.security:spring-security-oauth2-jose:5.7.2'
 	implementation 'org.springframework.security:spring-security-crypto:5.7.2'
-	implementation 'org.springframework.security:spring-security-web:5.7.2'
+	implementation 'org.springframework.security:spring-security-web:5.7.7'
 	implementation  'org.projectlombok:lombok:1.18.24'
 
 	implementation  'org.springframework:spring-jdbc:5.3.21'
 	implementation  'mysql:mysql-connector-java:8.0.29'
 
 
-	implementation  'de.jsmal:structure:0.3.9'
+	implementation  'de.jsmal:structure:0.4.0'
 	implementation  'de.jsmal:cruddao:0.1.9'
 
 	implementation  'com.opencsv:opencsv:5.3'
-	implementation  'org.json:json:20190722'
+	implementation 'org.json:json:20230227'
 	implementation 'junit:junit:4.13.1'
 	implementation 'junit:junit:4.13.1'
 
@@ -59,6 +59,7 @@ tasks.named("bootJar") {
 	}
 }
 
+// C:\Users\iurii\IdeaProjects\argo\build\libs
 tasks.named("bootWar") {
 	archiveName('argo.war')
 	manifest {

@@ -130,7 +130,7 @@ public class ServletEngine {
         log.debug("condition = " + condition);
         log.debug("limitOrder = " + limitOrder);
 
-        ResultSearchList searchResultRecords = SearchEngine.searchRecordsByParameters(search_CObject, columns_parameter, query.isReturnAllColumns(),query.getLanguage(),condition, limitOrder, dataSource, instanceDictionary);
+        ResultSearchList searchResultRecords = SearchEngine.searchRecordsByParameters(search_CObject, columns_parameter, query.isReturnAllColumns(),query.getLanguage(),condition, limitOrder, dataSource, instanceDictionary, null);
 
         log.debug("searchResultRecords = "+searchResultRecords); //add here columns_parameter - to build view - can be null
         //log.debug("JSON: " + searchResultRecords.toJSON());
