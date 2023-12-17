@@ -1,18 +1,3 @@
-/*
- * Copyright 2020-2021 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 package de.jsmal.web;
 
@@ -21,6 +6,7 @@ import java.util.stream.Collectors;
 
 import de.jsmal.core.ServletEngine;
 import de.jsmal.core.searchObject.SearchQuery;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -34,11 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static java.lang.Long.parseLong;
 
-/**
- * A controller for the token resource.
- *
- * @author Josh Cummings
- */
+@Slf4j
 @RestController
 public class TokenController {
 
@@ -53,6 +35,7 @@ public class TokenController {
 
 	@PostMapping("/token")
 	public String token(Authentication authentication) {
+	log.info("LOG: get function in /token");
 		Instant now = Instant.now();
 
 		long expiry = parseLong(this.expiryValue); //36000L - minutes for valid cert

@@ -22,7 +22,7 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-oauth2-jose:5.7.2'
 	implementation 'org.springframework.security:spring-security-crypto:5.7.2'
 	implementation 'org.springframework.security:spring-security-web:5.7.7'
-	implementation  'org.projectlombok:lombok:1.18.24'
+	implementation  'org.projectlombok:lombok:1.18.30'
 
 	implementation  'org.springframework:spring-jdbc:5.3.21'
 	implementation  'mysql:mysql-connector-java:8.0.29'
@@ -52,22 +52,27 @@ tasks.withType(Test).configureEach {
 
 
 
-tasks.named("bootJar") {
-	archiveName('argo.jar')
-	manifest {
-		attributes 'Start-Class': 'de.jsmal.ArgoApplication'
-	}
-}
+//tasks.named("bootJar") {
+//	archiveFileName ('argo.jar')
+//	manifest {
+//		attributes 'Start-Class': 'de.jsmal.ArgoApplication'
+//	}
+//}
 
 // C:\Users\iurii\IdeaProjects\argo\build\libs
-tasks.named("bootWar") {
-	archiveName('argo.war')
-	manifest {
-		attributes 'Start-Class': 'org.springframework.boot.loader.WarLauncher'
-		attributes 'Main-Class': 'de.jsmal.ArgoApplication'
-	}
-}
+//tasks.named("bootWar") {
+//	archiveName('argo.war')
+//	manifest {
+//		attributes 'Start-Class': 'org.springframework.boot.loader.WarLauncher'
+//		attributes 'Main-Class': 'de.jsmal.ArgoApplication'
+//	}
+//}
 
 springBoot {
 	mainClass = 'de.jsmal.ArgoApplication'
+}
+
+// server port in application.yaml
+bootJar {
+	archiveFileName = 'argo.jar'
 }
