@@ -2,6 +2,7 @@ package de.jsmal.core;
 
 import de.jsmal.core.engine.model.source.dictionary.LanguageDictionary;
 import de.jsmal.core.searchObject.SearchQuery;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -145,5 +147,14 @@ public class ServletEngine {
 //            return Base64.getEncoder().encodeToString(result.toJSON(languageDictionary, dataSource, instanceDictionary).getBytes(StandardCharsets.UTF_8));
 //        return result.toJSON();
         return result.toJSON(languageDictionary, dataSource, instanceDictionary);
+    }
+
+    public  String dbdict(){
+        ArrayList <String> result = new ArrayList<>();
+        for (Map.Entry<String, CObject> entry : instanceDictionary.getStructure().entrySet()) {
+            result.add(entry.getKey());
+        }
+        JSONArray jsonArray = new JSONArray(result);
+        return jsonArray.toString();
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,6 +61,13 @@ public class TokenController {
 	public String search(@RequestBody SearchQuery query) {
 		//return query.toString();
 		return this.servletEngine.search(query);
+	}
+
+	@GetMapping(
+			value = "/dbdict", produces = "application/json")
+	public String dbdict() {
+		//return query.toString();
+		return this.servletEngine.dbdict();
 	}
 
 }
