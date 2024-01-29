@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import de.jsmal.core.ServletEngine;
 import de.jsmal.core.searchObject.SearchQuery;
+import de.jsmal.core.searchObject.ViewQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -61,6 +62,13 @@ public class TokenController {
 	public String search(@RequestBody SearchQuery query) {
 		//return query.toString();
 		return this.servletEngine.search(query);
+	}
+
+	@PostMapping(
+			value = "/view", consumes = "application/json", produces = "application/json")
+	public String view(@RequestBody ViewQuery query) {
+		//return query.toString();
+		return this.servletEngine.view(query);
 	}
 
 	@GetMapping(

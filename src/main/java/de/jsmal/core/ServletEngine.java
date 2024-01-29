@@ -2,6 +2,7 @@ package de.jsmal.core;
 
 import de.jsmal.core.engine.model.source.dictionary.LanguageDictionary;
 import de.jsmal.core.searchObject.SearchQuery;
+import de.jsmal.core.searchObject.ViewQuery;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,10 +16,7 @@ import de.jsmal.core.engine.search.SearchEngine;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -140,6 +138,23 @@ public class ServletEngine {
         return searchResultRecords;
     }
 
+    public ResultSearchList getView(ViewQuery query) {
+        if (query==null) return new ResultSearchList("ERROR: Syntax of query has errors. NULL query", "en");
+        String tableName = query.getTable(); //query for this table
+        String viewName = query.getViewName(); //query for this view
+        String userName = query.getUserName();
+        if (tableName==null || tableName.isEmpty()) return new ResultSearchList("ERROR: Syntax of query has errors. No table name", "en");
+        CObject search_CObject = instanceDictionary.getNewCObjectByName("sysview");
+        if (viewName==null || viewName.isEmpty()) { viewName = "default"; }
+        search_CObject.updateAttributeStringValueByName ("table", tableName);
+        search_CObject.updateAttributeStringValueByName ("name", viewName);
+        // for user name doesnt work!!!!
+
+        ResultSearchList searchResultRecords = SearchEngine.searchRecordsByParameters(search_CObject, new ArrayList<String> (Arrays.asList("uuid","table","name", "user", "conf")), false,"en",new HashMap<>(), null, dataSource, instanceDictionary, null);
+
+return searchResultRecords;
+
+    }
     // function to response in JSON as a servlet
     public String search(SearchQuery query){
         ResultSearchList result = this.searchList(query);
@@ -156,5 +171,10 @@ public class ServletEngine {
         }
         JSONArray jsonArray = new JSONArray(result);
         return jsonArray.toString();
+    }
+
+    public String view(ViewQuery query){
+        ResultSearchList result = this.getView(query);
+        return result.toJSON(languageDictionary, dataSource, instanceDictionary);
     }
 }
