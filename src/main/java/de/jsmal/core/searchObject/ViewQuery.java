@@ -6,4 +6,5 @@ public class ViewQuery {
     private String table;
     private String viewName;
     private String userName;
+
 }

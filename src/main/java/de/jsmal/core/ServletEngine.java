@@ -140,17 +140,40 @@ public class ServletEngine {
 
     public ResultSearchList getView(ViewQuery query) {
         if (query==null) return new ResultSearchList("ERROR: Syntax of query has errors. NULL query", "en");
-        String tableName = query.getTable(); //query for this table
+        log.info("MAIN Query: " + query.toString());
         String viewName = query.getViewName(); //query for this view
-        String userName = query.getUserName();
-        if (tableName==null || tableName.isEmpty()) return new ResultSearchList("ERROR: Syntax of query has errors. No table name", "en");
+//        String userName = query.getUserName();
+        log.info("QUERY View viewName: " + viewName);
+        log.info("QUERY View userName: " + query.getUserName());
+        HashMap<String, String> condition = new HashMap<>();
+        if (query.getTable()==null || query.getTable().isEmpty()) return new ResultSearchList("ERROR: Syntax of query has errors. No table name", "en");
         CObject search_CObject = instanceDictionary.getNewCObjectByName("sysview");
-        if (viewName==null || viewName.isEmpty()) { viewName = "default"; }
-        search_CObject.updateAttributeStringValueByName ("table", tableName);
-        search_CObject.updateAttributeStringValueByName ("name", viewName);
-        // for user name doesnt work!!!!
+        if ((query.getViewName()==null || query.getViewName().isEmpty() && (query.getUserName()==null || query.getUserName().isEmpty())))
+        {   viewName = "default";
+        }
 
-        ResultSearchList searchResultRecords = SearchEngine.searchRecordsByParameters(search_CObject, new ArrayList<String> (Arrays.asList("uuid","table","name", "user", "conf")), false,"en",new HashMap<>(), null, dataSource, instanceDictionary, null);
+
+        search_CObject.updateAttributeStringValueByName ("table", "="+query.getTable());
+        if (query.getViewName() != null && !query.getViewName().isEmpty()){
+            search_CObject.updateAttributeStringValueByName ("name", "="+query.getViewName());
+        }
+        else {
+            if (query.getUserName() != null && !query.getUserName().isEmpty()) {
+                search_CObject.updateAttributeStringValueByName ("user", "="+query.getUserName());
+            }
+        }
+
+        // search_CObject.updateAttributeStringValueByName ("user", query.getUserName());
+        // for user name  work but with errors!!!!
+        log.info("QUERY View: " + search_CObject.toString() + " condition: " + condition.toString());
+        ResultSearchList searchResultRecords = SearchEngine.searchRecordsByParameters(search_CObject, new ArrayList<String> (Arrays.asList("uuid","table","name", "user", "conf")), false,"en",condition, null, dataSource, instanceDictionary, null);
+        if (searchResultRecords.getSize()<=0){
+            search_CObject = instanceDictionary.getNewCObjectByName("sysview");
+            search_CObject.updateAttributeStringValueByName ("table", "="+query.getTable());
+            search_CObject.updateAttributeStringValueByName ("name", "=default");
+            condition = new HashMap<>();
+            searchResultRecords = SearchEngine.searchRecordsByParameters(search_CObject, new ArrayList<String> (Arrays.asList("uuid","table","name", "user", "conf")), false,"en",condition, null, dataSource, instanceDictionary, null);
+        }
 
 return searchResultRecords;
 
