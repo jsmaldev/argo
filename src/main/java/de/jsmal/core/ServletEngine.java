@@ -139,40 +139,45 @@ public class ServletEngine {
     }
 
     public ResultSearchList getView(ViewQuery query) {
+        //errors -------------
         if (query==null) return new ResultSearchList("ERROR: Syntax of query has errors. NULL query", "en");
-        log.info("MAIN Query: " + query.toString());
+        if (query.getTable()==null || query.getTable().isEmpty()) return new ResultSearchList("ERROR: Syntax of query has errors. No table name", "en");
+
         String viewName = query.getViewName(); //query for this view
-//        String userName = query.getUserName();
+        String userName = query.getUserName();
+        HashMap<String, String> condition = new HashMap<>();
+
+        log.info("MAIN Query: " + query.toString());
         log.info("QUERY View viewName: " + viewName);
         log.info("QUERY View userName: " + query.getUserName());
-        HashMap<String, String> condition = new HashMap<>();
-        if (query.getTable()==null || query.getTable().isEmpty()) return new ResultSearchList("ERROR: Syntax of query has errors. No table name", "en");
+
         CObject search_CObject = instanceDictionary.getNewCObjectByName("sysview");
-        if ((query.getViewName()==null || query.getViewName().isEmpty() && (query.getUserName()==null || query.getUserName().isEmpty())))
-        {   viewName = "default";
+        if ((viewName==null || viewName.isEmpty() && (userName==null || userName.isEmpty())))
+        {
+            //get all records with empty user
+            userName = "NULL";
         }
 
 
         search_CObject.updateAttributeStringValueByName ("table", "="+query.getTable());
-        if (query.getViewName() != null && !query.getViewName().isEmpty()){
-            search_CObject.updateAttributeStringValueByName ("name", "="+query.getViewName());
+        if (viewName != null && !viewName.isEmpty()){
+            search_CObject.updateAttributeStringValueByName ("name", "="+viewName);
         }
-        else {
-            if (query.getUserName() != null && !query.getUserName().isEmpty()) {
-                search_CObject.updateAttributeStringValueByName ("user", "="+query.getUserName());
-            }
-        }
+        String strEqual = "=";
+        if (userName.equals("NULL")) { strEqual = "";}
+        search_CObject.updateAttributeStringValueByName ("user", strEqual + userName);
 
         // search_CObject.updateAttributeStringValueByName ("user", query.getUserName());
         // for user name  work but with errors!!!!
         log.info("QUERY View: " + search_CObject.toString() + " condition: " + condition.toString());
-        ResultSearchList searchResultRecords = SearchEngine.searchRecordsByParameters(search_CObject, new ArrayList<String> (Arrays.asList("uuid","table","name", "user", "conf")), false,"en",condition, null, dataSource, instanceDictionary, null);
+        ResultSearchList searchResultRecords = SearchEngine.searchRecordsByParameters(search_CObject, new ArrayList<String> (Arrays.asList("uuid","table","name", "user", "conf","default")), false,"en",condition, null, dataSource, instanceDictionary, null);
         if (searchResultRecords.getSize()<=0){
             search_CObject = instanceDictionary.getNewCObjectByName("sysview");
             search_CObject.updateAttributeStringValueByName ("table", "="+query.getTable());
-            search_CObject.updateAttributeStringValueByName ("name", "=default");
+            search_CObject.updateAttributeStringValueByName ("user", "NULL");
+//            search_CObject.updateAttributeStringValueByName ("default", "true");
             condition = new HashMap<>();
-            searchResultRecords = SearchEngine.searchRecordsByParameters(search_CObject, new ArrayList<String> (Arrays.asList("uuid","table","name", "user", "conf")), false,"en",condition, null, dataSource, instanceDictionary, null);
+            searchResultRecords = SearchEngine.searchRecordsByParameters(search_CObject, new ArrayList<String> (Arrays.asList("uuid","table","name", "user", "conf","default")), false,"en",condition, null, dataSource, instanceDictionary, null);
         }
 
 return searchResultRecords;

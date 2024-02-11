@@ -144,6 +144,7 @@ public class SpringBeansConfig {
 
 			ret_instanceDictionary = Dictionary.getDictionaryFromMySqlSource(dictionarySource);
 			log.info("=================================================");
+			log.info("===== datasource_url = " + datasource_url);
 			log.info("===== Instance Dictionary is initialised ========");
 			ret_instanceDictionary.getDbIndexMap();
 			log.info("===== Indexes are initialised ===================");

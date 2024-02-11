@@ -32,7 +32,9 @@ spring:
     jdbc:
       initialize-schema: always
   datasource:
-    url: jdbc:mysql://localhost:3306/db_proto?useUnicode=true&allowPublicKeyRetrieval=true&serverTimezone=UTC&useSSL=false&useLegacyDatetimeCode=false
+    dbhost: localhost
+    dbport: 3306
+    url: jdbc:mysql://${spring.datasource.dbhost}:${spring.datasource.dbport}/db_proto?useUnicode=true&allowPublicKeyRetrieval=true&serverTimezone=UTC&useSSL=false&useLegacyDatetimeCode=false
     username: admuser
     password: ThePassword
 #Server port for embedded Tomcat in JAR
