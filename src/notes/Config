@@ -13,3 +13,5 @@ clean из gradle удаляет старый argo.jar
 
 запуск jar:
 java -jar C:\Users\iurii\IdeaProjects\argo\build\libs\argo.jar
+с параметрами:
+java -jar C:\Users\iurii\IdeaProjects\argo\build\libs\argo.jar -Dmy.datasource.dbport="3306"

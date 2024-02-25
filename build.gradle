@@ -28,8 +28,8 @@ dependencies {
 	implementation  'mysql:mysql-connector-java:8.0.29'
 
 
-	implementation  'de.jsmal:structure:0.4.1'
-	implementation  'de.jsmal:cruddao:0.1.9'
+	implementation  'de.jsmal:structure:0.4.2'
+	implementation  'de.jsmal:cruddao:0.2.0'
 
 	implementation  'com.opencsv:opencsv:5.3'
 	implementation 'org.json:json:20230227'

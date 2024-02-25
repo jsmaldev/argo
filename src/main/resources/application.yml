@@ -11,12 +11,12 @@ security:
 
 #Just for INFO
 structure:
-  version: 0.4.1
+  version: 0.4.2
 
 de:
   jsmal:
     cruddao:
-      version: 0.1.9
+      version: 0.2.0
 
 servlet:
   app:
@@ -32,11 +32,11 @@ spring:
     jdbc:
       initialize-schema: always
   datasource:
-    dbhost: localhost
-    dbport: 3306
+    dbhost: ${dbhost:localhost}
+    dbport: ${dbport:3306}
     url: jdbc:mysql://${spring.datasource.dbhost}:${spring.datasource.dbport}/db_proto?useUnicode=true&allowPublicKeyRetrieval=true&serverTimezone=UTC&useSSL=false&useLegacyDatetimeCode=false
-    username: admuser
-    password: ThePassword
+    username: ${usernameDB:admuser}
+    password: ${passwordDB:ThePassword}
 #Server port for embedded Tomcat in JAR
 server:
   port: 8090
