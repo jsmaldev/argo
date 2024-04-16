@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import de.jsmal.core.ServletEngine;
 import de.jsmal.core.searchObject.SearchQuery;
 import de.jsmal.core.searchObject.ViewQuery;
+import de.jsmal.core.updateObject.UpdateByUUIDQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -69,6 +70,13 @@ public class TokenController {
 	public String view(@RequestBody ViewQuery query) {
 		//return query.toString();
 		return this.servletEngine.view(query);
+	}
+
+	@PostMapping(
+			value = "/viewu", consumes = "application/json", produces = "application/json")
+	public String view(@RequestBody UpdateByUUIDQuery query) {
+		//return query.toString();
+		return this.servletEngine.viewUpdateByUUID(query);
 	}
 
 	@GetMapping(

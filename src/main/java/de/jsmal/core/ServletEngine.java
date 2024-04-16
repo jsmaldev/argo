@@ -3,6 +3,7 @@ package de.jsmal.core;
 import de.jsmal.core.engine.model.source.dictionary.LanguageDictionary;
 import de.jsmal.core.searchObject.SearchQuery;
 import de.jsmal.core.searchObject.ViewQuery;
+import de.jsmal.core.updateObject.UpdateByUUIDQuery;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -204,5 +205,14 @@ return searchResultRecords;
     public String view(ViewQuery query){
         ResultSearchList result = this.getView(query);
         return result.toJSON(languageDictionary, dataSource, instanceDictionary);
+    }
+
+    public String viewUpdateByUUID (UpdateByUUIDQuery query){
+        // ResultSearchList result = this.getView(query);
+        // return result.toJSON(languageDictionary, dataSource, instanceDictionary);
+        // log.info("query.uuid in viewu = " + query.getUuid());
+        // log.info("query.className in viewu = " + query.getClassName());
+        // log.info("query.jsonEncodedBase64Object in viewu = " + query.getJsonEncodedBase64Object());
+        return "View is updated just fake message " + query.getUuid() + " b_key " + query.getB_key();
     }
 }
