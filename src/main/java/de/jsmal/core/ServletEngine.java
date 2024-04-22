@@ -1,6 +1,8 @@
 package de.jsmal.core;
 
 import de.jsmal.core.engine.model.source.dictionary.LanguageDictionary;
+import de.jsmal.core.engine.update.ResultUpdateRecord;
+import de.jsmal.core.engine.update.UpdateEngine;
 import de.jsmal.core.searchObject.SearchQuery;
 import de.jsmal.core.searchObject.ViewQuery;
 import de.jsmal.core.updateObject.UpdateByUUIDQuery;
@@ -209,10 +211,21 @@ return searchResultRecords;
 
     public String viewUpdateByUUID (UpdateByUUIDQuery query){
         // ResultSearchList result = this.getView(query);
-        // return result.toJSON(languageDictionary, dataSource, instanceDictionary);
-        // log.info("query.uuid in viewu = " + query.getUuid());
-        // log.info("query.className in viewu = " + query.getClassName());
-        // log.info("query.jsonEncodedBase64Object in viewu = " + query.getJsonEncodedBase64Object());
-        return "View is updated just fake message " + query.getUuid() + " b_key " + query.getB_key();
+        ResultUpdateRecord resultUpdateRecord = new ResultUpdateRecord(
+                query.getClassName(),
+                query.getUuid(),
+                query.getLanguage(),
+                query.getJsonEncodedBase64Object()
+        );
+        ArrayList<String> columns = resultUpdateRecord.getColumns();
+        HashMap<String,String> condition = new HashMap<>();
+        ResultUpdateRecord result = UpdateEngine.updateRecordByUUID(
+                resultUpdateRecord,
+                resultUpdateRecord.getLanguage(),
+                dataSource,
+                instanceDictionary,
+                null
+        );
+        return result.toJSON(languageDictionary, dataSource, instanceDictionary);
     }
 }
