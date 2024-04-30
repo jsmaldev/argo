@@ -1,5 +1,8 @@
 package de.jsmal.core;
 
+import de.jsmal.core.createObject.CreateByParametersQuery;
+import de.jsmal.core.engine.create.CreateEngine;
+import de.jsmal.core.engine.create.ResultCreateRecord;
 import de.jsmal.core.engine.model.source.dictionary.LanguageDictionary;
 import de.jsmal.core.engine.update.ResultUpdateRecord;
 import de.jsmal.core.engine.update.UpdateEngine;
@@ -226,6 +229,24 @@ return searchResultRecords;
                 instanceDictionary,
                 null
         );
+        return result.toJSON(languageDictionary, dataSource, instanceDictionary);
+    }
+
+    public String viewCreateByParam (CreateByParametersQuery query){
+        ResultCreateRecord resultCreateRecord = new ResultCreateRecord(
+                query.getClassName(),
+                query.getLanguage(),
+                query.getJsonEncodedBase64Object()
+        );
+
+        ResultCreateRecord result = CreateEngine.createRecordByParameters(
+                resultCreateRecord,
+                resultCreateRecord.getLanguage(),
+                dataSource,
+                instanceDictionary,
+                null
+        );
+
         return result.toJSON(languageDictionary, dataSource, instanceDictionary);
     }
 }

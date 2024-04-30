@@ -28,7 +28,7 @@ dependencies {
 	implementation  'mysql:mysql-connector-java:8.0.29'
 
 
-	implementation  'de.jsmal:structure:0.4.3'
+	implementation  'de.jsmal:structure:0.4.4'
 	implementation  'de.jsmal:cruddao:0.2.0'
 
 	implementation  'com.opencsv:opencsv:5.3'

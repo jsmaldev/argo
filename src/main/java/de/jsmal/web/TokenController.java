@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.stream.Collectors;
 
 import de.jsmal.core.ServletEngine;
+import de.jsmal.core.createObject.CreateByParametersQuery;
 import de.jsmal.core.searchObject.SearchQuery;
 import de.jsmal.core.searchObject.ViewQuery;
 import de.jsmal.core.updateObject.UpdateByUUIDQuery;
@@ -77,6 +78,13 @@ public class TokenController {
 	public String view(@RequestBody UpdateByUUIDQuery query) {
 		//return query.toString();
 		return this.servletEngine.viewUpdateByUUID(query);
+	}
+
+	@PostMapping(
+			value = "/viewc", consumes = "application/json", produces = "application/json")
+	public String view(@RequestBody CreateByParametersQuery query) {
+		//return query.toString();
+		return this.servletEngine.viewCreateByParam(query);
 	}
 
 	@GetMapping(
