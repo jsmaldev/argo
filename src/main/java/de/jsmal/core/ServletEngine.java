@@ -20,7 +20,6 @@ import de.jsmal.core.engine.model.source.dictionary.InstanceDictionary;
 import de.jsmal.core.engine.search.ResultSearchList;
 import de.jsmal.core.engine.search.SearchEngine;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -212,7 +211,7 @@ return searchResultRecords;
         return result.toJSON(languageDictionary, dataSource, instanceDictionary);
     }
 
-    public String viewUpdateByUUID (UpdateByUUIDQuery query){
+    public String objUpdateByUUID(UpdateByUUIDQuery query){
         // ResultSearchList result = this.getView(query);
         ResultUpdateRecord resultUpdateRecord = new ResultUpdateRecord(
                 query.getClassName(),
@@ -232,7 +231,7 @@ return searchResultRecords;
         return result.toJSON(languageDictionary, dataSource, instanceDictionary);
     }
 
-    public String viewCreateByParam (CreateByParametersQuery query){
+    public String objCreateByParam(CreateByParametersQuery query){
         ResultCreateRecord resultCreateRecord = new ResultCreateRecord(
                 query.getClassName(),
                 query.getLanguage(),

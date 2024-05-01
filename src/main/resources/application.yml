@@ -11,7 +11,7 @@ security:
 
 #Just for INFO
 structure:
-  version: 0.4.4
+  version: 0.4.5
 
 de:
   jsmal:

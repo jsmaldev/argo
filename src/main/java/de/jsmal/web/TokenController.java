@@ -74,17 +74,17 @@ public class TokenController {
 	}
 
 	@PostMapping(
-			value = "/viewu", consumes = "application/json", produces = "application/json")
+			value = "/obju", consumes = "application/json", produces = "application/json")
 	public String view(@RequestBody UpdateByUUIDQuery query) {
 		//return query.toString();
-		return this.servletEngine.viewUpdateByUUID(query);
+		return this.servletEngine.objUpdateByUUID(query);
 	}
 
 	@PostMapping(
-			value = "/viewc", consumes = "application/json", produces = "application/json")
+			value = "/objc", consumes = "application/json", produces = "application/json")
 	public String view(@RequestBody CreateByParametersQuery query) {
 		//return query.toString();
-		return this.servletEngine.viewCreateByParam(query);
+		return this.servletEngine.objCreateByParam(query);
 	}
 
 	@GetMapping(
